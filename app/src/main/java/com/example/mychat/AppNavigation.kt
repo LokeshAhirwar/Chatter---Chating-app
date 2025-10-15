@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mychat.modals.AuthViewModel
+import com.example.mychat.views.chatScreen
 import com.example.mychat.views.homeScreen
 import com.example.mychat.views.loginScreen
 import com.example.mychat.views.signUpScreen
@@ -23,6 +24,8 @@ sealed class Routes{
     object Home: Routes()
     @Serializable
     object SignUp: Routes()
+    @Serializable
+    object Chat: Routes()
 
 }
 //data object login
@@ -41,6 +44,9 @@ fun appNavigation(modifier: Modifier = Modifier,viewModel: AuthViewModel) {
         }
         composable<Routes.SignUp> {
             signUpScreen(modifier,viewModel,navcontroller)
+        }
+        composable<Routes.Chat> {
+            chatScreen(modifier,viewModel,navcontroller)
         }
 
     }
