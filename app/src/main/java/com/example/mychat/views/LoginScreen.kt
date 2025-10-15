@@ -62,7 +62,10 @@ fun loginScreen(modifier: Modifier, viewModel: AuthViewModel,navController: NavC
     val authState = viewModel.authState.observeAsState()
     LaunchedEffect(authState.value) {
         when(authState.value){
-            is AuthState.authenticated -> navController.navigate(Routes.Home)
+            is AuthState.authenticated -> navController.navigate(Routes.Home){
+                popUpTo(Routes.Login){inclusive = true}
+//                launchSingleTop = true
+            }
             else -> Unit
         }
     }
