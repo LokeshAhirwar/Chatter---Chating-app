@@ -50,6 +50,8 @@ dependencies {
     //firebase
     implementation(platform("com.google.firebase:firebase-bom:34.4.0"))
     implementation("com.google.firebase:firebase-analytics")
+    //cloud firesotre library
+    implementation("com.google.firebase:firebase-firestore")
 
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
