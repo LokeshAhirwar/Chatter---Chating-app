@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mychat.modals.AuthViewModel
+import com.example.mychat.modals.ProfileViewModel
 import com.example.mychat.views.chatScreen
 import com.example.mychat.views.homeScreen
 import com.example.mychat.views.loginScreen
@@ -33,7 +34,10 @@ sealed class Routes{
 //data object home
 
 @Composable
-fun appNavigation(modifier: Modifier = Modifier,viewModel: AuthViewModel) {
+fun appNavigation(
+    modifier: Modifier = Modifier,
+    viewModel: AuthViewModel,
+) {
     val navcontroller = rememberNavController()
     NavHost(navController = navcontroller, startDestination = Routes.Login){
         composable<Routes.Login> {
