@@ -64,7 +64,7 @@ fun loginScreen(modifier: Modifier, viewModel: AuthViewModel,navController: NavC
         when(authState.value){
             is AuthState.authenticated -> navController.navigate(Routes.Home){
                 popUpTo(Routes.Login){inclusive = true}
-//                launchSingleTop = true
+                launchSingleTop = true
             }
             else -> Unit
         }
