@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -37,10 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -48,16 +44,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.example.mychat.R
 import com.example.mychat.Routes
 import com.example.mychat.modals.AuthState
 import com.example.mychat.modals.AuthViewModel
+import com.example.mychat.modals.ProfileViewModel
 
 
+//@Preview(showSystemUi = true)
 @Composable
-fun signUpScreen(modifier: Modifier, viewModel: AuthViewModel,navController: NavController) {
-//    val email by viewModel.email.collectAsStateWithLifecycle()
-    //    val password by viewModel.password.collectAsStateWithLifecycle()
+fun signUpScreen(
+    modifier: Modifier,
+    viewModel: AuthViewModel,
+    navController: NavController,
+) {
+    var fullName: String by remember { mutableStateOf("") }
+    var userName: String by remember { mutableStateOf("") }
+    var mobileNo: String by remember { mutableStateOf("") }
+    var about: String by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val passwordVisibility by viewModel.passwordVisibility.collectAsStateWithLifecycle()
@@ -80,7 +83,8 @@ fun signUpScreen(modifier: Modifier, viewModel: AuthViewModel,navController: Nav
         Text(
             "SignUp",
             modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .align(alignment = Alignment.CenterHorizontally),
             textAlign = TextAlign.Center,
             fontSize = 28.sp,
         )
@@ -92,21 +96,101 @@ fun signUpScreen(modifier: Modifier, viewModel: AuthViewModel,navController: Nav
             fontSize = 30.sp,
         )
         Spacer(Modifier.height(32.dp))
-        Text(
-            text = "Email",
-            modifier = Modifier
-                .padding(start = 26.dp),
-            fontSize = 24.sp,
-            color = Color.Black,
-        )
+//        Text(
+//            text = "Email",
+//            modifier = Modifier
+//                .padding(start = 26.dp),
+//            fontSize = 24.sp,
+//            color = Color.Black,
+//        )
         val focusManager = LocalFocusManager.current
+        TextField(
+            value = fullName,
+            onValueChange = { fullName = it },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 24.dp, end = 24.dp, top = 12.dp),
+            placeholder = {Text("Full Name")},
+            singleLine = true,
+            textStyle = TextStyle.Default.copy(fontSize = 20.sp),
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus(true) }),
+            shape = RoundedCornerShape(20.dp),
+            colors = TextFieldDefaults.colors(
+                disabledIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent,
+                errorIndicatorColor = Color.Transparent,
+
+                )
+
+        )
+        TextField(
+            value = userName,
+            onValueChange = { userName = it },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 24.dp, end = 24.dp, top = 12.dp),
+            placeholder = {Text("Username")},
+            singleLine = true,
+            textStyle = TextStyle.Default.copy(fontSize = 20.sp),
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus(true) }),
+            shape = RoundedCornerShape(20.dp),
+            colors = TextFieldDefaults.colors(
+                disabledIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent,
+                errorIndicatorColor = Color.Transparent,
+
+                )
+
+        )
+        TextField(
+            value = mobileNo,
+            onValueChange = { mobileNo = it },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 24.dp, end = 24.dp, top = 12.dp),
+            placeholder = {Text("Mobile No")},
+            singleLine = true,
+            textStyle = TextStyle.Default.copy(fontSize = 20.sp),
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus(true) }),
+            shape = RoundedCornerShape(20.dp),
+            colors = TextFieldDefaults.colors(
+                disabledIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent,
+                errorIndicatorColor = Color.Transparent,
+
+                )
+
+        )
+        TextField(
+            value = about,
+            onValueChange = { about = it },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 24.dp, end = 24.dp, top = 12.dp),
+            placeholder = {Text("about")},
+            singleLine = true,
+            textStyle = TextStyle.Default.copy(fontSize = 20.sp),
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus(true) }),
+            shape = RoundedCornerShape(20.dp),
+            colors = TextFieldDefaults.colors(
+                disabledIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent,
+                errorIndicatorColor = Color.Transparent,
+
+                )
+
+        )
         TextField(
             value = email,
             onValueChange = { email = it },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp, top = 12.dp),
-            placeholder = {Text("example@gmail.com",)},
+            placeholder = {Text("example@gmail.com")},
             singleLine = true,
             textStyle = TextStyle.Default.copy(fontSize = 20.sp),
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus(true) }),
@@ -121,13 +205,13 @@ fun signUpScreen(modifier: Modifier, viewModel: AuthViewModel,navController: Nav
 
         )
 
-        Text(
-            text = "Password",
-            modifier = Modifier
-                .padding(start = 26.dp, top = 24.dp),
-            fontSize = 24.sp,
-            color = Color.Black,
-        )
+//        Text(
+//            text = "Password",
+//            modifier = Modifier
+//                .padding(start = 26.dp, top = 24.dp),
+//            fontSize = 24.sp,
+//            color = Color.Black,
+//        )
         TextField(
             value = password,
             onValueChange = { password = it },
@@ -148,7 +232,7 @@ fun signUpScreen(modifier: Modifier, viewModel: AuthViewModel,navController: Nav
                     )
                 }
             },
-            placeholder = {Text("***********")},
+            placeholder = {Text("Password")},
             visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus(true) }),
             shape = RoundedCornerShape(20.dp),
@@ -175,7 +259,7 @@ fun signUpScreen(modifier: Modifier, viewModel: AuthViewModel,navController: Nav
         }
         Button(
             onClick = {
-                viewModel.singUp(email,password)
+                viewModel.singUp(fullName,userName,mobileNo,about,email,password)
             },
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
