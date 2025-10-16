@@ -7,6 +7,8 @@ import androidx.navigation.compose.rememberNavController
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -14,6 +16,7 @@ class AuthViewModel: ViewModel() {
 
     val auth:FirebaseAuth = FirebaseAuth.getInstance()
     private val _authState = MutableLiveData<AuthState>()
+    val db = Firebase.firestore
     var authState: LiveData<AuthState> = _authState
 
     init {
@@ -30,7 +33,7 @@ class AuthViewModel: ViewModel() {
         }
     }
 
-    fun login(email: String, password: String){
+    fun login(email: String,password: String){
 
         if(email.isEmpty() || password.isEmpty()){
             _authState.value = AuthState.failure("Email and password cannot be empty")
@@ -45,7 +48,7 @@ class AuthViewModel: ViewModel() {
             }
         }
     }
-    fun singUp(email: String, password: String){
+    fun singUp(fullName:String,userName: String,mobileNumber: String,about: String,email: String,password: String){
 
         if(email.isEmpty() || password.isEmpty()){
             _authState.value = AuthState.failure("Email and password cannot be empty")
@@ -53,7 +56,25 @@ class AuthViewModel: ViewModel() {
         _authState.value = AuthState.loading
         auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener {task ->
             if(task.isSuccessful){
-                _authState.value = AuthState.authenticated
+                val uid = task.result.user?.uid?: return@addOnCompleteListener
+                val user = hashMapOf(
+                    "user Id"  to uid,
+                    "fullName" to fullName,
+                    "userName" to userName,
+                    "mobileNumber" to mobileNumber,
+                    "about" to about,
+                    "email" to email,
+                    "createdAt" to FieldValue.serverTimestamp()
+
+                )
+                db.collection("users").add(user).addOnCompleteListener {
+                    if(it.isSuccessful){
+                        _authState.value = AuthState.authenticated
+                    }else {
+                        _authState.value =
+                            AuthState.failure(it.exception?.message ?: "Something Went wrong")
+                    }
+                }
             }else{
                 _authState.value = AuthState.failure(task.exception?.message?:"Something Went wrong")
             }
